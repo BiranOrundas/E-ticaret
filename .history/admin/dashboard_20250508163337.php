@@ -140,39 +140,6 @@ for ($i = 5; $i >= 0; $i--) {
     </div>
   </div>
 
-  <div class="container-fluid pt-4 px-4">
-  <div class="bg-light rounded p-4">
-    <h6 class="mb-4">Son 7 Günde En Çok Satılan 5 Ürün</h6>
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover mb-0">
-        <thead class="table-light">
-          <tr>
-            <th>#</th>
-            <th>Ürün</th>
-            <th>Satılan Adet</th>
-            <th>Toplam Gelir</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($topProducts): foreach ($topProducts as $i => $tp): ?>
-          <tr>
-            <td><?= $i + 1 ?></td>
-            <td><?= htmlspecialchars($tp['title']) ?></td>
-            <td><?= $tp['total_qty'] ?></td>
-            <td>₺<?= number_format($tp['revenue'],2,',','.') ?></td>
-          </tr>
-          <?php endforeach; else: ?>
-          <tr>
-            <td colspan="4" class="text-center">Henüz veri yok.</td>
-          </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-
   <!-- Son 5 Sipariş Tablosu -->
   <div class="container-fluid pt-4 px-4">
     <div class="card">

@@ -90,7 +90,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                   <input type="hidden" name="order_id" value="<?= $o['id'] ?>">
                   <select name="status" class="form-select form-select-sm me-2">
                     <?php 
-                      $states = ['hazirlaniyor'=>'Hazırlanıyor','kargoda'=>'Kargoya Verildi','tamamlandi'=>'Tamamlandı','iptal'=>'İptal'];
+                      $states = ['pending'=>'Hazırlanıyor','processing'=>'Kargoya Verildi','completed'=>'Tamamlandı','İptal'=>'İptal'];
                       foreach($states as $code=>$label): 
                     ?>
                       <option value="<?= $code ?>"

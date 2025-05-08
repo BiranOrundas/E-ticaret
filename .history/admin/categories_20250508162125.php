@@ -57,33 +57,33 @@ if (isset($_GET['edit_id'])) {
     <div class="card-body">
       <h5 class="card-title"><?= $editCat ? 'Kategoriyi Düzenle' : 'Yeni Kategori Ekle' ?></h5>
       <form method="post">
-        <input type="hidden" name="action" value="<?= $editCat ? 'edit' : 'add' ?>">
-        <?php if ($editCat): ?>
-          <input type="hidden" name="id" value="<?= $editCat['id'] ?>">
+        <input type="hidden" name="action" value="<?= \$editCat ? 'edit' : 'add' ?>">
+        <?php if (\$editCat): ?>
+          <input type="hidden" name="id" value="<?= \$editCat['id'] ?>">
         <?php endif; ?>
 
         <div class="mb-3">
           <label class="form-label">Kategori Adı</label>
           <input type="text" name="name" class="form-control" required
-                 value="<?= $editCat ? htmlspecialchars($editCat['name']) : '' ?>">
+                 value="<?= \$editCat ? htmlspecialchars(\$editCat['name']) : '' ?>">
         </div>
 
         <div class="mb-3">
           <label class="form-label">Üst Kategori</label>
           <select name="parent_id" class="form-select">
             <option value="">— Yok —</option>
-            <?php foreach ($allCats as $cat): 
-              if ($editCat && ($cat['id'] === $editCat['id'] || $cat['parent_id'] === $editCat['id'])) continue;
+            <?php foreach (\$allCats as \$cat): 
+              if (\$editCat && (\$cat['id'] === \$editCat['id'] || \$cat['parent_id'] === \$editCat['id'])) continue;
             ?>
-              <option value="<?= $cat['id'] ?>" <?= $editCat && $cat['id']==$editCat['parent_id']?'selected':'' ?>>
-                <?= str_repeat('&nbsp;&nbsp;', $cat['parent_id'] ? 1 : 0) . htmlspecialchars($cat['name']) ?>
+              <option value="<?= \$cat['id'] ?>" <?= \$editCat && \$cat['id']==\$editCat['parent_id']?'selected':'' ?>>
+                <?= str_repeat('&nbsp;&nbsp;', \$cat['parent_id'] ? 1 : 0) . htmlspecialchars(\$cat['name']) ?>
               </option>
             <?php endforeach; ?>
           </select>
         </div>
 
-        <button class="btn btn-success"><?= $editCat ? 'Güncelle' : 'Ekle' ?></button>
-        <?php if ($editCat): ?><a href="categories.php" class="btn btn-secondary">İptal</a><?php endif; ?>
+        <button class="btn btn-success"><?= \$editCat ? 'Güncelle' : 'Ekle' ?></button>
+        <?php if (\$editCat): ?><a href="categories.php" class="btn btn-secondary">İptal</a><?php endif; ?>
       </form>
     </div>
   </div>
@@ -104,29 +104,29 @@ if (isset($_GET['edit_id'])) {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($allCats as $cat): ?>
+            <?php foreach (\$allCats as \$cat): ?>
             <tr>
-              <td><?= $cat['id'] ?></td>
-              <td><?= htmlspecialchars($cat['name']) ?></td>
+              <td><?= \$cat['id'] ?></td>
+              <td><?= htmlspecialchars(\$cat['name']) ?></td>
               <td>
                 <?php
-                  if ($cat['parent_id']) {
-                    foreach ($allCats as $p) {
-                      if ($p['id']==$cat['parent_id']) echo htmlspecialchars($p['name']);
+                  if (\$cat['parent_id']) {
+                    foreach (\$allCats as \$p) {
+                      if (\$p['id']==\$cat['parent_id']) echo htmlspecialchars(\$p['name']);
                     }
                   } else echo '—';
                 ?>
               </td>
-              <td><?= $cat['product_count'] ?></td>
+              <td><?= \$cat['product_count'] ?></td>
               <td>
-                <a href="?edit_id=<?= $cat['id'] ?>" class="btn btn-sm btn-primary">Düzenle</a>
-                <a href="?delete_id=<?= $cat['id'] ?>"
+                <a href="?edit_id=<?= \$cat['id'] ?>" class="btn btn-sm btn-primary">Düzenle</a>
+                <a href="?delete_id=<?= \$cat['id'] ?>"
                    onclick="return confirm('Silmek istediğinizden emin misiniz?')"
                    class="btn btn-sm btn-danger">Sil</a>
               </td>
             </tr>
             <?php endforeach; ?>
-            <?php if (empty($allCats)): ?><tr><td colspan="5" class="text-center">Henüz kategori yok.</td></tr><?php endif; ?>
+            <?php if (empty(\$allCats)): ?><tr><td colspan="5" class="text-center">Henüz kategori yok.</td></tr><?php endif; ?>
           </tbody>
         </table>
       </div>

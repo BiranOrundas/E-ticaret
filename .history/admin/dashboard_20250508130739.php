@@ -22,25 +22,6 @@ $todayRevenue = (float)$stmt->fetchColumn();
 // Toplam gelir
 $totalRevenue = (float)$pdo->query("SELECT COALESCE(SUM(total_amount),0) FROM orders")->fetchColumn();
 
-// Son 7 günde tamamlanan siparişlerden top 5 ürünü getir
-$topProdStmt = $pdo->prepare("
-  SELECT 
-    p.id,
-    p.title,
-    SUM(oi.qty * oi.unit_price) AS revenue,
-    SUM(oi.qty)               AS total_qty
-  FROM order_items oi
-  JOIN orders o   ON oi.order_id    = o.id
-  JOIN products p ON oi.product_id  = p.id
-  WHERE o.status = 'completed'
-    AND o.created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-  GROUP BY p.id, p.title
-  ORDER BY revenue DESC
-  LIMIT 5
-");
-$topProdStmt->execute();
-$topProducts = $topProdStmt->fetchAll(PDO::FETCH_ASSOC);
-
 
 // 2) Son 6 aylık aylık veri (grafik için)
 $months = [];
@@ -61,20 +42,6 @@ for ($i = 5; $i >= 0; $i--) {
     $revenueData[] = (float)$row['rev'];
 }
 ?>
-
-   <!-- 2) Son 5 siparişi çek -->
-   <?php
-  $recentStmt = $pdo->query("
-    SELECT 
-      o.id, DATE_FORMAT(o.created_at, '%d.%m.%Y %H:%i') AS created_at,
-      u.name AS customer_name, o.total_amount, o.status
-    FROM orders o
-    JOIN users u ON o.user_id = u.id
-    ORDER BY o.created_at DESC
-    LIMIT 5
-  ");
-  $recentOrders = $recentStmt->fetchAll(PDO::FETCH_ASSOC);
-  ?>
 
 <div class="content p-4">
   <h2>Dashboard</h2>
@@ -139,39 +106,6 @@ for ($i = 5; $i >= 0; $i--) {
       </div>
     </div>
   </div>
-
-  <div class="container-fluid pt-4 px-4">
-  <div class="bg-light rounded p-4">
-    <h6 class="mb-4">Son 7 Günde En Çok Satılan 5 Ürün</h6>
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover mb-0">
-        <thead class="table-light">
-          <tr>
-            <th>#</th>
-            <th>Ürün</th>
-            <th>Satılan Adet</th>
-            <th>Toplam Gelir</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($topProducts): foreach ($topProducts as $i => $tp): ?>
-          <tr>
-            <td><?= $i + 1 ?></td>
-            <td><?= htmlspecialchars($tp['title']) ?></td>
-            <td><?= $tp['total_qty'] ?></td>
-            <td>₺<?= number_format($tp['revenue'],2,',','.') ?></td>
-          </tr>
-          <?php endforeach; else: ?>
-          <tr>
-            <td colspan="4" class="text-center">Henüz veri yok.</td>
-          </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
 
   <!-- Son 5 Sipariş Tablosu -->
   <div class="container-fluid pt-4 px-4">
