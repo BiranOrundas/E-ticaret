@@ -236,7 +236,7 @@ $allProds = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </form>
       </div>
     </div>
- <h6>Ürün listesi</h6>
+ 
   <!-- Filtre ve Pagination -->
   <div class="d-flex mb-3 align-items-center">
     <form method="get" class="d-flex align-items-center">

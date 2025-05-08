@@ -236,7 +236,19 @@ $allProds = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </form>
       </div>
     </div>
- <h6>Ürün listesi</h6>
+
+    <!-- Products List with Pagination -->
+    <div class="content p-4">
+  <h2>Ürün Yönetimi</h2>
+  <?php if (!empty($_SESSION['success'])): ?>
+    <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
+    <?php unset($_SESSION['success']); ?>
+  <?php endif; ?>
+  <?php if (!empty($_SESSION['error'])): ?>
+    <div class="alert alert-danger"><?= $_SESSION['error'] ?></div>
+    <?php unset($_SESSION['error']); ?>
+  <?php endif; ?>
+
   <!-- Filtre ve Pagination -->
   <div class="d-flex mb-3 align-items-center">
     <form method="get" class="d-flex align-items-center">
