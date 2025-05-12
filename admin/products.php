@@ -230,12 +230,14 @@ $allProds = $stmt->fetchAll(PDO::FETCH_ASSOC);
               </select>
             </div>
           <?php endif; ?>
+          
 
           <button type="submit" class="btn btn-primary"><?= $editProd ? 'Güncelle' : 'Ekle' ?></button>
           <?php if($editProd): ?><a href="products.php" class="btn btn-secondary ms-2">İptal</a><?php endif; ?>
         </form>
       </div>
     </div>
+    
  <h6>Ürün listesi</h6>
   <!-- Filtre ve Pagination -->
   <div class="d-flex mb-3 align-items-center">
@@ -252,6 +254,7 @@ $allProds = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <option value="price_asc" <?= $sort==='price_asc'?'selected':'' ?>>Fiyat ↑</option>
         <option value="price_desc" <?= $sort==='price_desc'?'selected':'' ?>>Fiyat ↓</option>
         <option value="alpha" <?= $sort==='alpha'?'selected':'' ?>>A → Z</option>
+        
       </select>
       <!-- hidden page =1 -->
       <input type="hidden" name="page" value="1">
@@ -279,7 +282,11 @@ $allProds = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <td><?= htmlspecialchars($p['category_name'] ?? '—') ?></td>
           <td>₺<?= number_format($p['price'],2,',','.') ?></td>
           <td><?= $p['stock'] ?></td>
+          
           <td>
+            <a href="product_variations.php?product_id=<?= $p['id'] ?>"
+   class="btn btn-sm btn-info">Varyasyonlar</a>
+
             <a href="?edit_id=<?= $p['id'] ?>&page=<?= $page ?>&per_page=<?= $perPage ?>&sort=<?= $sort ?>" class="btn btn-sm btn-warning">Düzenle</a>
             <a href="?delete_id=<?= $p['id'] ?>&page=<?= $page ?>&per_page=<?= $perPage ?>&sort=<?= $sort ?>"
                onclick="return confirm('Silmek istediğinize emin misiniz?')" class="btn btn-sm btn-danger">Sil</a>
@@ -309,16 +316,7 @@ $allProds = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </ul>
   </nav>
 </div>
-
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
-
-
-
-
-
-
-
-
+</div>
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
