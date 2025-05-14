@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <p class="text-center mb-0">
                             Hesabın yok mu? 
-                            <a href="signup.php">Kayıt Ol</a>
+                            <a href="./signup.php">Kayıt Ol</a>
                         </p>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 <?php
 // admin/index.php
 
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/../config/config.php';
 
 // If not logged in, send to login
 if (empty($_SESSION['admin_logged_in'])) {

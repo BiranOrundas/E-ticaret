@@ -1,10 +1,9 @@
 <?php
-// 1) Oturumu başlat
+// config/config.php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 2) Veritabanı ayarları
 define('DB_HOST','localhost');
 define('DB_NAME','e_ticaret');
 define('DB_USER','root');

@@ -1,5 +1,7 @@
 <?php
-// 1) Oturumu başlat
+// config/config.php
+
+// 1) Oturumu başlat (bir kez)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

@@ -1,7 +1,5 @@
 <?php
 // admin/login.php
-
-// önce admin/config.php’yı al (bu hem DB’yi hem de guard’ı yükler)
 require_once __DIR__ . '/config.php';
 
 $error = '';
@@ -9,15 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $pass  = $_POST['password'] ?? '';
 
-    $stmt = $pdo->prepare("SELECT id, name, password_hash, role 
-                           FROM users WHERE email = ?");
+    // Kullanıcıyı çek
+    $stmt = $pdo->prepare("SELECT id, name, password_hash, role FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user
-        && password_verify($pass, $user['password_hash'])
-        && $user['role']==='admin'
-    ) {
+    if ($user && password_verify($pass, $user['password_hash']) && $user['role'] === 'admin') {
+        // Başarılı giriş
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_id']        = $user['id'];
         $_SESSION['admin_name']      = $user['name'];

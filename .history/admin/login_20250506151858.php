@@ -1,23 +1,19 @@
 <?php
 // admin/login.php
-
-// önce admin/config.php’yı al (bu hem DB’yi hem de guard’ı yükler)
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/../config/config.php';
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $pass  = $_POST['password'] ?? '';
 
-    $stmt = $pdo->prepare("SELECT id, name, password_hash, role 
-                           FROM users WHERE email = ?");
+    // Kullanıcıyı çek
+    $stmt = $pdo->prepare("SELECT id, name, password_hash, role FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user
-        && password_verify($pass, $user['password_hash'])
-        && $user['role']==='admin'
-    ) {
+    if ($user && password_verify($pass, $user['password_hash']) && $user['role'] === 'admin') {
+        // Başarılı giriş
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_id']        = $user['id'];
         $_SESSION['admin_name']      = $user['name'];
@@ -60,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <a href="./dashboard.php">
-                                <h3 class="text-primary">PANEL</h3>
+                                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
                             </a>
                             <h3>Sign In</h3>
                         </div>
@@ -106,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <p class="text-center mb-0">
                             Hesabın yok mu? 
-                            <a href="signup.php">Kayıt Ol</a>
+                            <a href="./signup.php">Kayıt Ol</a>
                         </p>
                     </div>
                 </div>

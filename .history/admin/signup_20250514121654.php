@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <a href="index.html" class="">
                                 <h3 class="text-primary"></h3>
                             </a>
-                            <h3>Admin Kaydı Oluştur</h3>
+                            <h3>Admin Kaydı Oluştur/h3>
                         </div>
 
           <?php if ($errors): ?>
